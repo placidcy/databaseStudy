@@ -1,0 +1,44 @@
+﻿body {
+}
+
+.LoginSection {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    border: 1px solid #000000;
+    padding: 15px;
+}
+
+.ID_section {
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.ID_section #inputID {
+    float: right;
+}
+
+.pass_section {
+    overflow: hidden;
+}
+
+.pass_section #inputPass {
+    float: right;
+}
+
+.LoginBox {
+}
+
+.loginBtn {
+    width: 30%;
+    height: 20%;
+    float: right;
+}
+
+.bottomBtnBox {
+    margin-top : 50px;
+    overflow: hidden;
+
+}

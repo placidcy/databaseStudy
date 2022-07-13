@@ -1,0 +1,36 @@
+﻿body {
+}
+
+.joinBox {
+    width: 25%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.joinBox .inputBox {
+    overflow: hidden;
+}
+
+.joinBox .title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+joinBox .inputBox .checkDuplicate {
+    float: right;
+}
+
+.joinBox .inputBox input {
+    margin-bottom: 10px;
+    float: right;
+}
+
+.btnBox {
+    float: right;
+}
+
+.btnBox .joinBtn {
+    margin-right: 10px;
+}

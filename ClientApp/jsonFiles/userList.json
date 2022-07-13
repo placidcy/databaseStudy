@@ -1,0 +1,19 @@
+{
+    "user1": {
+        "ID": "abcd23",
+        "name": "이름1",
+        "email": "abcd23@naver.com"
+    },
+
+    "user2": {
+        "ID": "cdef",
+        "name": "이름2",
+        "email": "cdef@naver.com"
+    },
+
+    "user3": {
+        "ID": "eeee",
+        "name": "이름3",
+        "email": "eeee@naver.com"
+    }
+}

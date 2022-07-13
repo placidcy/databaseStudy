@@ -1,0 +1,27 @@
+﻿body {
+}
+
+.modifyInfoBox {
+    width: 25% ;
+    position: absolute;
+    left: 50%;
+    top : 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ID_box .ID {
+    float: right;
+}
+
+.inputBox {
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.inputBox input {
+    float : right;
+}
+
+.modifyInfoBox .title {
+    text-align: center;
+    margin-bottom: 30px;
+}
