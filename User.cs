@@ -1,4 +1,4 @@
-﻿namespace my_new_app.Controllers
+﻿namespace my_new_app
 {
     public class User
     {

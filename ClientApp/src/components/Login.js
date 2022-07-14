@@ -7,17 +7,11 @@ export class Login extends Component{
 
     constructor(props) {
         super(props);
-
-        //const userID = React.createRef();
-        //const userPassWord = React.createRef();
     }
 
     clickLogin = () => {
         const id = document.querySelector(".ID_section #inputID");
         const password = document.querySelector(".pass_section #inputPass");
-
-        console.log(id.value);
-        console.log(password.value);
 
         if (id.value == null) {
             console.log("id칸 비어있음");
@@ -60,7 +54,11 @@ export class Login extends Component{
             }),
         });
 
-        console.log(res);
+        if (res.ok) {
+            const result = await res.json();
+
+            console.log(res);
+        }
     }
 
     render() {
