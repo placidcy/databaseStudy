@@ -4,7 +4,6 @@ import '../css/Login.css';
 import { Link } from "react-router-dom";
 
 export class Login extends Component{
-
     constructor(props) {
         super(props);
     }
@@ -14,13 +13,11 @@ export class Login extends Component{
         const password = document.querySelector(".pass_section #inputPass");
 
         if (id.value == null) {
-            console.log("id칸 비어있음");
-            return;
+            alert("아이디 칸이 비어 있음");
         }
 
         if (password.value == null) {
-            console.log("password칸이 비어있음");
-            return;
+            alert("비밀번호 칸이 비어 있음");
         }
 
         this.doLogin(id.value, password.value);
@@ -49,15 +46,18 @@ export class Login extends Component{
             },
             body: JSON.stringify({
                 id: id,
-                password : password
-                
-            }),
-        });
+                password: password
+            })
+        })
 
         if (res.ok) {
-            const result = await res.json();
-
             console.log(res);
+            window.location.href = "./UserList";
+            return res.json();
+        }
+
+        else {
+            alert("아이디 또는 비밀번호가 맞지 않음");
         }
     }
 
@@ -74,7 +74,6 @@ export class Login extends Component{
                         <span>PW : </span>
                         <input type="password" id="inputPass" />
                     </div>
-
 
                     <div className="bottomBtnBox">
                         <Link to="/join"><button className="joinBtn" >회원가입</button></Link>

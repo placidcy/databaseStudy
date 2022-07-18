@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System;
 
 
 namespace my_new_app.Controllers
@@ -16,11 +18,16 @@ namespace my_new_app.Controllers
         [HttpPost]
         public ActionResult requestUserData([FromBody] User userInfo)
         {
-            if(userInfo != null)
-            {
-                m_dbManager.RequestSQL("SELECT userID, password FROM UserInfo");
+            List<UserInfo> memberList = new List<UserInfo>();
 
-                return Ok();
+            memberList = m_dbManager.SelectUserInfos("userID= '" + userInfo.ID + "'" + " AND " + "password = '" + userInfo.Password + "'");
+
+            for(int i = 0; i < memberList.Count; i++)
+            {
+                if(userInfo.ID == memberList[i].UserID && userInfo.Password == memberList[i].PassWord)
+                {
+                    return Ok();
+                }
             }
 
             return BadRequest();

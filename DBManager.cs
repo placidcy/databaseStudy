@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Text;
 
 namespace my_new_app
 {
@@ -29,23 +30,10 @@ namespace my_new_app
             //string constring = "Data Source=" + m_strServerIP + "," + m_strPort + ";Initial Catalog=" + m_strDBName + ";User ID=" + m_strID + ";Password=" + m_strPassword + ";";
             string constring = string.Format("Data Source={0};Initial Catalog={1};User ID={2};Password={3};", Host, m_strDBName, m_strID, m_strPassword);
 
-            string sqlQuery = "SELECT * FROM UserInfo";
-
-            m_sqlConnect = new SqlConnection(constring)
-
-            SqlCommand sqlCommand = new SqlCommand(sqlQuery, m_sqlConnect);
-            SqlDataReader dataReader = sqlCommand.ExecuteReader();
+            m_sqlConnect = new SqlConnection(constring);
 
             m_sqlConnect.Open();
-            sqlCommand.Connection = m_sqlConnect;
-            sqlCommand.CommandText = "SELECT * FROM UserInfo";
-            sqlCommand.ExecuteNonQuery();
 
-
-
-
-
-            
             //sqlConnect = new SqlConnection();
             //sqlConnect.ConnectionString = constring;
 
@@ -66,13 +54,130 @@ namespace my_new_app
         public ArrayList RequestSQL(string strSQL)
         {
             ArrayList arrResult = new ArrayList();
-            SqlCommand cmdSelect = new SqlCommand(strSQL, m_sqlConnect);
+            StringBuilder strBuilder = new StringBuilder();
 
-            SqlDataReader dataReader = cmdSelect.ExecuteReader();
+            string sqlQuery = strSQL;
 
-            arrResult.Add(dataReader);
+            m_sqlConnect.Open();
+
+            SqlCommand sqlCommand = new SqlCommand(sqlQuery, m_sqlConnect);
+
+            sqlCommand.Connection = m_sqlConnect;
+            sqlCommand.CommandText = sqlQuery;
+
+            SqlDataReader dataReader = sqlCommand.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                string strID = dataReader["userID"] as string;
+                string strLevel = dataReader["ID"] as string;
+
+                strBuilder.Append(strID);
+                strBuilder.Append(strLevel);
+            }
+
+            arrResult.Add(strBuilder);
+
+            dataReader.Close();
 
             return arrResult;
+        }
+
+        public List<UserLevel> SelectUserLevel(string strCondition)
+        {
+            List<UserLevel> userLevelList = null;
+
+            string strSQL = "SELECT ID, levelName FROM UserLevel";
+
+            if(strCondition != null && strCondition.Length > 0) 
+            {
+                strSQL += " WHERE "  + strCondition + "'";
+            }
+
+            m_sqlConnect.Open();
+
+            SqlCommand sqlCmd = new SqlCommand(strSQL, m_sqlConnect);
+            SqlDataReader dataReader = sqlCmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+            while(dataReader.Read())
+            {
+                string strID = dataReader["ID"] as string;
+                string strLevelName = dataReader["levelName"] as string;
+
+                int nID = -1;
+
+                if(Int32.TryParse(strID, out nID) == false)
+                {
+                    return null;
+                }
+
+                UserLevel userLevel = new UserLevel();
+
+                userLevel.ID = nID;
+                userLevel.LevelName = strLevelName;
+
+                userLevelList.Add(userLevel);
+            }
+
+            dataReader.Close();
+
+            return userLevelList;
+        }
+
+        public List<UserInfo> SelectUserInfos(string strCondision)
+        {
+            List<UserInfo> userInfos = new List<UserInfo>();
+
+            string strSQL = "Select ID, userID, name, email, phoneNumber, userLevel, password From UserInfo";
+
+            if (strCondision != null && strCondision.Length > 0)
+            {
+                strSQL += " Where " + strCondision;
+            }
+
+            m_sqlConnect.Open();
+
+            SqlCommand sqlCommand = new SqlCommand(strSQL, m_sqlConnect);
+            SqlDataReader dataReader = sqlCommand.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                string strID = dataReader["ID"].ToString() as string;
+                string strUserID = dataReader["userID"] as string;
+                string strName = dataReader["name"] as string;
+                string strEmail = dataReader["email"] as string;
+                string strPhoneNumber = dataReader["phoneNumber"] as string;
+                string strUserLevel = dataReader["userLevel"].ToString() as string;
+                string strPassWord = dataReader["password"] as string;
+               
+                int nID = -1;
+                int nUserID = -1;
+
+                if(Int32.TryParse(strID, out nID) == false)
+                {
+                    return null;
+                }
+
+                if(Int32.TryParse(strUserLevel, out nUserID) == false)
+                {
+                    return null;
+                }
+
+                UserInfo userInfo = new UserInfo();
+                userInfo.ID = nID;
+                userInfo.UserID = strUserID;
+                userInfo.Name = strName;
+                userInfo.Email = strEmail;
+                userInfo.PhoneNumber = strPhoneNumber;
+                userInfo.UserLevel = nUserID;
+                userInfo.PassWord = strPassWord;
+
+                userInfos.Add(userInfo);
+            }
+
+            dataReader.Close();
+
+            return userInfos;
         }
 
         private static string[] SelectQuery(SqlCommand cmd)
