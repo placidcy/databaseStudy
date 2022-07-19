@@ -1,7 +1,8 @@
 ﻿import React, { Component, createRef } from 'react';
-import { useHistory } from "react-router-dom";
+import { BrowserRouter, Route, Router, useHistory } from "react-router-dom";
 import '../css/Login.css';
 import { Link } from "react-router-dom";
+import { UserList } from "./UserList";
 
 export class Login extends Component{
     constructor(props) {
@@ -51,13 +52,18 @@ export class Login extends Component{
         })
 
         if (res.ok) {
+            let result = await res.json();
             console.log(res);
-            window.location.href = "./UserList";
-            return res.json();
-        }
 
-        else {
-            alert("아이디 또는 비밀번호가 맞지 않음");
+            if (result.success == true) {
+                /*window.location.href = "./UserList";*/
+                // 임의 버튼을 만들어서 안보이게 수정하고 <Link> 태그로 클릭하면 페이지 이동
+
+                window.location.href = "./UserList";
+
+            } else {
+                alert("아이디 또는 비밀번호가 일치하지 않음");
+            }
         }
     }
 

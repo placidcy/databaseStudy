@@ -5,7 +5,6 @@ import { UserList } from './components/UserList';
 import { Login } from './components/Login';
 import { Join } from './components/Join';
 import { ModifyUserInfo } from './components/ModifyUserInfo';
-import { MainPage } from './components/MainPage';
 import './custom.css'
 
 export default class SubApp extends Component {
@@ -14,7 +13,7 @@ export default class SubApp extends Component {
       return (
           <Layout>
               <Route path='/UserList' component={UserList} />
-              <Route path='/MainPage' component={MainPage} />
+       
               <Route path='/ModifyUserInfo' component={ModifyUserInfo} />
           </Layout>
     );

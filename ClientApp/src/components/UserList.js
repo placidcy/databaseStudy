@@ -2,17 +2,16 @@ import React, { Component, useState } from 'react';
 import "../css/UserList.css";
 import { Link } from "react-router-dom";
 
-
 export class UserList extends Component {
     constructor(props) {
         super(props);
     }
 
     componentDidMount() {
-        const res = fetch("/UserInfo/requestUserData");
+        //const res = fetch("/UserInfo/requestUserData");
 
-        res.then((response) => { response.json() })
-            .then((data) => { console.log(data) });
+        //res.then((response) => { response.json() })
+        //    .then((data) => { console.log(data) });
     }
 
     //displayUI = () => {
