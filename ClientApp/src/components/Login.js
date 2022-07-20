@@ -1,4 +1,5 @@
-﻿import React, { Component, createRef } from 'react';
+﻿/// <reference path="navmenu.js" />
+import React, { Component, createRef } from 'react';
 import { BrowserRouter, Route, Router, useHistory } from "react-router-dom";
 import '../css/Login.css';
 import { Link } from "react-router-dom";
@@ -53,12 +54,10 @@ export class Login extends Component{
 
         if (res.ok) {
             let result = await res.json();
-            console.log(res);
+            console.log(result);
 
             if (result.success == true) {
-                /*window.location.href = "./UserList";*/
-                // 임의 버튼을 만들어서 안보이게 수정하고 <Link> 태그로 클릭하면 페이지 이동
-
+                sessionStorage.setItem("name", result.userInfo.name);
                 window.location.href = "./UserList";
 
             } else {

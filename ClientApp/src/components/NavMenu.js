@@ -19,11 +19,7 @@ export class NavMenu extends Component {
     this.state = {
       collapsed: true
       };
-
-      sessionStorage.setItem("name", "이름1");
-      this.session = sessionStorage.getItem("name");
-
-  }
+    }
 
   toggleNavbar () {
     this.setState({
@@ -31,26 +27,27 @@ export class NavMenu extends Component {
     });
     }
 
-  render () {
-      return (
-        <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
-          <Container>
-            <NavbarBrand tag={Link} to="/">my_new_app</NavbarBrand>
-            <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-            <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
-              <ul className="navbar-nav flex-grow">
-             <NavItem>
-              <NavLink tag={Link} className="text-dark" to="/modifyUserInfo">{this.session}</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/UserList">회원목록</NavLink>
-                </NavItem>
-              </ul>
-            </Collapse>
-          </Container>
-        </Navbar>
-      </header>
-    );
-  }
+
+    render() {
+        return (
+            <header>
+                <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
+                    <Container>
+                        <NavbarBrand tag={Link} to="/">my_new_app</NavbarBrand>
+                        <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+                        <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
+                            <ul className="navbar-nav flex-grow">
+                                <NavItem>
+                                    <NavLink tag={Link} className="text-dark userName" to="/modifyUserInfo">{}</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={Link} className="text-dark LoginState" to="/UserList">test</NavLink>
+                                </NavItem>
+                            </ul>
+                        </Collapse>
+                    </Container>
+                </Navbar>
+            </header>
+        );
+    }
 }

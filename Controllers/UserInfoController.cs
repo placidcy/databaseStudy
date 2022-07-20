@@ -9,18 +9,19 @@ namespace my_new_app.Controllers
     public class UserInfoController : Controller
     {
         DBManager m_dbManager;
-        Response response;
+        UserPassWord userPassword;
 
         public UserInfoController()
         {
             m_dbManager = new DBManager();
-            response = new Response();
+            userPassword = new UserPassWord();
         }
 
         [HttpPost]
         public ActionResult requestUserData([FromBody] User userInfo)
         {
             List<UserInfo> memberList = new List<UserInfo>();
+            ResponseUser user = new ResponseUser();
 
             // 해당하는 아이디가 있는지 검사
             memberList = m_dbManager.SelectUserInfos("userID= '" + userInfo.ID + "'");
@@ -28,45 +29,42 @@ namespace my_new_app.Controllers
             // memberList값이 없을때(SQL 쿼리문이 잘못됐을때)
             if(memberList == null)
             {
-                response.Success = false;
-                response.Message = "memberList 값이 존재하지 않음";
+                user.Success = false;
+                user.Message = "memberList 값이 존재하지 않음";
             }
 
             // 유저 정보가 없을때(memberLIst.count == 0)
-            if(memberList.Count == 0)
+            if (memberList.Count == 0)
             {
-                response.Success = false;
-                response.Message = "유저 정보가 없음";
+                user.Success = false;
+                user.Message = "유저 정보가 없음";
             }
 
             // 유저 정보가 있을때 아이디, 비밀번호가 맞는지 검사
             for(int i = 0; i < memberList.Count; i++)
-            {
-                if (userInfo.ID == memberList[i].UserID)
-                {
-                    response.Message = "아이디가 일치함";
-                    response.Success = true;
-                }
-
-                else
-                {
-                    response.Message = "아이디가 일치하지 않음";
-                    response.Success = false;
-                }
-
+            { 
                 if (userInfo.Password == memberList[i].PassWord)
                 {
-                    response.Message = "비밀번호가 일치함";
-                    response.Success = true;
+                    user.Message = "비밀번호가 일치함";
+                    user.Success = true;
+
+                    user.UserInfo = new UserInfo();
+                    user.UserInfo.UserID = memberList[0].UserID;
+                    user.UserInfo.ID = memberList[0].ID;
+                    user.UserInfo.Name = memberList[0].Name;
+                    user.UserInfo.Email = memberList[0].Email;
+                    user.UserInfo.PhoneNumber = memberList[0].PhoneNumber;
+                    user.UserInfo.UserLevel = memberList[0].UserLevel;
                 }
+
                 else
                 {
-                    response.Message = "비밀번호가 일치하지 않음";
-                    response.Success = false;
+                    user.Message = "비밀번호가 일치하지 않음";
+                    user.Success = false;
                 }
             }
 
-            return Ok(response);
+            return Ok(user);
         }
     }
 }

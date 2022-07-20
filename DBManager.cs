@@ -25,9 +25,6 @@ namespace my_new_app
         {
             string Host = m_strServerIP;
 
-            //sqlConnect = new SqlConnection();
-            //string constring = "server=" + m_strServerIP + "," + m_strPort + ";database=" + m_strDBName + ";uid=" + m_strID + ";pwd=" + m_strPassword;
-            //string constring = "Data Source=" + m_strServerIP + "," + m_strPort + ";Initial Catalog=" + m_strDBName + ";User ID=" + m_strID + ";Password=" + m_strPassword + ";";
             string constring = string.Format("Data Source={0};Initial Catalog={1};User ID={2};Password={3};", Host, m_strDBName, m_strID, m_strPassword);
 
             m_sqlConnect = new SqlConnection(constring);
