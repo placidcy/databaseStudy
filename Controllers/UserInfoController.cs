@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
 
-
 namespace my_new_app.Controllers
 {
     public class UserInfoController : Controller
@@ -18,7 +17,7 @@ namespace my_new_app.Controllers
         }
 
         [HttpPost]
-        public ActionResult requestUserData([FromBody] User userInfo)
+        public ActionResult requestLogin([FromBody] User userInfo)
         {
             List<UserInfo> memberList = new List<UserInfo>();
             ResponseUser user = new ResponseUser();
@@ -30,14 +29,14 @@ namespace my_new_app.Controllers
             if(memberList == null)
             {
                 user.Success = false;
-                user.Message = "memberList 값이 존재하지 않음";
+                user.Message = "유저 목록 컨테이너가 할당되지 않음";
             }
 
             // 유저 정보가 없을때(memberLIst.count == 0)
             if (memberList.Count == 0)
             {
                 user.Success = false;
-                user.Message = "유저 정보가 없음";
+                user.Message = "저장된 유저 정보가 없음";
             }
 
             // 유저 정보가 있을때 아이디, 비밀번호가 맞는지 검사
@@ -65,6 +64,43 @@ namespace my_new_app.Controllers
             }
 
             return Ok(user);
+        }
+
+        [HttpPost]
+        public ActionResult requestUserDatas()
+        {
+            List<UserInfo> memberList = new List<UserInfo>();
+            ResponseUser resUser = new ResponseUser();
+
+            memberList = m_dbManager.SelectUserInfos("");
+
+            if(memberList == null)
+            {
+                resUser.Message = "유저 목록 컨테이너가 할당되지 않음";
+                resUser.Success = false;
+            }
+
+            if(memberList.Count == 0)
+            {
+                resUser.Message = "저장된 유저 정보가 없음";
+                resUser.Success = false;
+            }
+
+            for(int i = 0; i < memberList.Count; i++)
+            {
+                resUser.Message = "유저 찾기 성공";
+                resUser.Success = true;
+
+                resUser.UserInfo = new UserInfo();
+
+                resUser.UserInfo.ID = memberList[i].ID;
+                resUser.UserInfo.Name = memberList[i].Name;
+                resUser.UserInfo.Email = memberList[i].Email;
+            }
+
+            
+            Console.WriteLine("test");
+            return Ok(resUser);
         }
     }
 }

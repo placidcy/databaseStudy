@@ -10,7 +10,6 @@ import { UserList } from "./UserList";
 export class Login extends Component{
     constructor(props) {
         super(props);
-
     }
 
     clickLogin = () => {
@@ -30,7 +29,7 @@ export class Login extends Component{
 
     async doLogin(id, password) {
         // UnserInfoContaller/requestUserData 함수
-        const res = await fetch('/UserInfo/requestUserData', {
+        const res = await fetch('/UserInfo/requestLogin', {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
@@ -44,10 +43,11 @@ export class Login extends Component{
 
         if (res.ok) {
             let result = await res.json();
-            console.log(result);
 
             if (result.success == true) {
                 sessionStorage.setItem("name", result.userInfo.name);
+                sessionStorage.setItem("login", result.success);
+  
                 window.location.href = "./UserList";
 
             } else {
