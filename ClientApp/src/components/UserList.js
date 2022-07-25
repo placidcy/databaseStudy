@@ -8,29 +8,33 @@ import { Link } from "react-router-dom";
 // 수정하면 다시 회원 목록으로 돌아가고 수정된 데이터가 표현되게 구현
 
 export class UserList extends Component {
+    state = {
+        userList : []
+    }
+
     constructor(props) {
         super(props);
+    }
 
-        this.state = {
-            userList: {}
-        }
+    componentDidMount() {
+        this.ClickModifyButton();
     }
 
     displayUI = () => {
         let arrDisplayUI = [];
 
+        this.LoadUserListData();
+
         if (this.state.userList === null || this.state.userList === undefined)
             return null;
 
         for (let i = 0; i < this.state.userList.length; i++) {
-            let user = this.state.userList[i];
-
             arrDisplayUI.push(
                 <tr>
                     <td><input class="checkBox" type="checkbox"></input></td>
-                    <td>{user.ID}</td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
+                    <td>{this.state.userList[i].userInfo.id}</td>
+                    <td>{this.state.userList[i].userInfo.name}</td>
+                    <td>{this.state.userList[i].userInfo.email}</td>
                     <td>
                         <Link to="/modifyUserInfo">
                             <button type="button">수정</button>
@@ -41,7 +45,15 @@ export class UserList extends Component {
         }
 
         return arrDisplayUI;
-    };
+    }
+
+    ClickModifyButton() {
+        const modifyButton = document.querySelector(".table-striped .button");
+
+        const userName = document.querySelector(".table-striped tbody tr td:nth-child(3)");
+
+
+    }
 
     async LoadUserListData() {
         let result;
@@ -56,18 +68,14 @@ export class UserList extends Component {
 
         if (response.ok) {
             result = await response.json();
-            this.state.userList = result;
+            /*this.state.userList = result;*/
+            this.setState({ userList: result });
 
         } else {
             console.log("데이터를 불러오지 못함");
         }
     }
-
-    componentDidMount() {
-        this.LoadUserListData();
-    }
   
-
     render() {
         let displayUIData = this.displayUI();
 
@@ -85,9 +93,7 @@ export class UserList extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            {displayUIData}
-                        </tr>
+                         {displayUIData}  
                     </tbody>
                 </table>
             </div>

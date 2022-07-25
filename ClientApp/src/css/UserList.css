@@ -1,6 +1,7 @@
 ﻿body {
 }
 
-.table-striped tbody tr td .checkBox{
+.table-striped tbody tr td .checkBox {
     vertical-align: middle;
 }
+

@@ -27,6 +27,13 @@ export class Login extends Component{
         this.doLogin(id.value, password.value);
     }
 
+    RunPressEnter(event) {
+        if (event.key === "Enter") {
+            console.log("Enter");
+            window.location.href = "./UserList";
+        }
+    }
+
     async doLogin(id, password) {
         // UnserInfoContaller/requestUserData 함수
         const res = await fetch('/UserInfo/requestLogin', {
@@ -50,6 +57,9 @@ export class Login extends Component{
   
                 window.location.href = "./UserList";
 
+                this.RunPressEnter();
+
+
             } else {
                 alert("아이디 또는 비밀번호가 일치하지 않음");
             }
@@ -72,7 +82,7 @@ export class Login extends Component{
 
                     <div className="bottomBtnBox">
                         <Link to="/join"><button className="joinBtn" >회원가입</button></Link>
-                        <button className="loginBtn" type="submit" formMethod="post" onClick={this.clickLogin}>로그인</button>
+                        <button className="loginBtn" type="submit" formMethod="post" onClick={this.clickLogin} onKeyPress={this.clickLogin}>로그인</button>
                     </div>
                 </div>
             </div>
