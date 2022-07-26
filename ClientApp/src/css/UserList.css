@@ -5,3 +5,6 @@
     vertical-align: middle;
 }
 
+.table tr td:nth-child(2) {
+    /*background-color: blue;*/
+}

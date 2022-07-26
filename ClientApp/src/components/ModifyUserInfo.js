@@ -2,43 +2,25 @@
 import '../css/modifyUserInfo.css';
 
 export class ModifyUserInfo extends Component {
-    state = {
-        userList: []
-    }
+    constructor(props) {
+        super(props);
 
-    async LoadUserListData() {
-        let result;
-
-        let response = await fetch('/UserInfo/requestUserDatas', {
-            method: "POST",
-            headers: {
-                "contents-type": "application/json",
-            },
-            body: null
-        })
-
-        if (response.ok) {
-            result = await response.json();
-            
-            this.setState({ userList: result });
-
-            console.log(this.state.userList);
-
-        } else {
-            console.log("데이터를 불러오지 못함");
+        this.state = {
+            userInfo: []
         }
     }
 
+    async LoadUserInfo() {
+        let response = await fetch()
+    }
 
     render() {
-        this.LoadUserListData();
-
         return (
             <div className="modifyInfoBox">
                 <h2 className="title">회원 정보 변경</h2>
                 <div className="ID_box inputBox">
-                    <span>ID: </span>
-                    <span className="ID">{}</span>
+                    <span>ID(Primary Key): </span>
+                    <span className="ID">{sessionStorage.getItem("primaryKey")}</span>
                 </div>
 
                 <div className="PW_box inputBox">
@@ -55,6 +37,8 @@ export class ModifyUserInfo extends Component {
                     <label>EMAIL 변경: </label>
                     <input type="text"></input>
                 </div>
+
+                <button type="submit">수정</button>
             </div>
         )
     }

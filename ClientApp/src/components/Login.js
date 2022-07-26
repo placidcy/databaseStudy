@@ -54,6 +54,7 @@ export class Login extends Component{
             if (result.success == true) {
                 sessionStorage.setItem("name", result.userInfo.name);
                 sessionStorage.setItem("login", result.success);
+                sessionStorage.setItem("primaryKey", result.userInfo.id);
   
                 window.location.href = "./UserList";
 

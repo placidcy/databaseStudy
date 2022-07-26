@@ -70,8 +70,6 @@ namespace my_new_app.Controllers
         public ActionResult requestUserDatas()
         {
             List<UserInfo> memberList = new List<UserInfo>();
-            //ResponseUser resUser = new ResponseUser();
-
             memberList = m_dbManager.SelectUserInfos("");
 
             ResponseUser[] resUsers = new ResponseUser[memberList.Count];
@@ -102,6 +100,46 @@ namespace my_new_app.Controllers
                     resUsers[i].UserInfo.Email = memberList[i].Email;
                 }
                 
+            }
+
+            return Ok(resUsers);
+        }
+
+        public ActionResult ModifyUserInfo([FromBody] UserInfo userInfo)
+        {
+            List<UserInfo> memberList = new List<UserInfo>();
+            UserInfo userinfo = new UserInfo();
+
+            memberList = m_dbManager.SelectUserInfos("ID = " + userinfo.ID);
+
+            ResponseUser[] resUsers = new ResponseUser[memberList.Count];
+
+            for (int i = 0; i < memberList.Count; i++)
+            {
+                resUsers[i] = new ResponseUser();
+                resUsers[i].UserInfo = new UserInfo();
+
+                if (memberList == null)
+                {
+                    resUsers[i].Message = "유저 목록 컨테이너가 할당되지 않음";
+                    resUsers[i].Success = false;
+                }
+
+                if (memberList.Count == 0)
+                {
+                    resUsers[i].Message = "저장된 유저 정보가 없음";
+                    resUsers[i].Success = false;
+                }
+
+                else
+                {
+                    resUsers[i].Message = "유저 찾기 성공";
+                    resUsers[i].Success = true;
+                    resUsers[i].UserInfo.ID = memberList[i].ID;
+                    resUsers[i].UserInfo.Name = memberList[i].Name;
+                    resUsers[i].UserInfo.Email = memberList[i].Email;
+                }
+
             }
 
             return Ok(resUsers);

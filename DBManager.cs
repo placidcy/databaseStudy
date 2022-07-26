@@ -177,6 +177,38 @@ namespace my_new_app
             return userInfos;
         }
 
+        public List<UserInfo> ModifyUserName(string strUserName, string strCondition)
+        {
+            List<UserInfo> userList = new List<UserInfo>();
+
+            string sql = "UPDATE UserInfo SET name = " + strUserName;
+
+            if (strCondition != null || strCondition.Length > 0)
+            {
+                sql += " WHERE " + strCondition;
+            }
+
+            m_sqlConnect.Open();
+
+            SqlCommand sqlCommand = new SqlCommand(sql, m_sqlConnect);
+            SqlDataReader dataReader = sqlCommand.ExecuteReader();
+
+            while (dataReader.Read())
+            {
+                string strName = dataReader["name"] as string;
+
+                UserInfo userInfo = new UserInfo();
+                userInfo.Name = strName;
+
+                userList.Add(userInfo);
+            }
+
+            dataReader.Close();
+
+
+            return userList;
+        }
+
         private static string[] SelectQuery(SqlCommand cmd)
         {
             SqlDataReader reader = cmd.ExecuteReader();

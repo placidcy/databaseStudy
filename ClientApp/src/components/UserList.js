@@ -8,23 +8,21 @@ import { Link } from "react-router-dom";
 // 수정하면 다시 회원 목록으로 돌아가고 수정된 데이터가 표현되게 구현
 
 export class UserList extends Component {
-    state = {
-        userList : []
-    }
-
     constructor(props) {
         super(props);
+
+        this.state = {
+            userList: []
+        }
     }
 
     componentDidMount() {
-        this.ClickModifyButton();
+        this.LoadUserListData();
     }
 
     displayUI = () => {
         let arrDisplayUI = [];
-
-        this.LoadUserListData();
-
+        
         if (this.state.userList === null || this.state.userList === undefined)
             return null;
 
@@ -37,22 +35,23 @@ export class UserList extends Component {
                     <td>{this.state.userList[i].userInfo.email}</td>
                     <td>
                         <Link to="/modifyUserInfo">
-                            <button type="button">수정</button>
+                            <button type="submit" onClick={this.CheckPrimaryKey }>수정</button>
                         </Link>
                     </td>
                 </tr>
             )
         }
-
         return arrDisplayUI;
     }
 
-    ClickModifyButton() {
-        const modifyButton = document.querySelector(".table-striped .button");
-
-        const userName = document.querySelector(".table-striped tbody tr td:nth-child(3)");
-
-
+    CheckPrimaryKey(event) {
+        for (let i = 0; i < this.state.userList.length; i++) {
+            if (sessionStorage.getItem("primaryKey") != this.state.userList[i].userInfo.id) {
+                event.preventDefault();
+                alert("primary key값이 다름");
+            }
+        } 
+       
     }
 
     async LoadUserListData() {
