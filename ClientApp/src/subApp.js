@@ -5,6 +5,7 @@ import { UserList } from './components/UserList';
 import { Login } from './components/Login';
 import { Join } from './components/Join';
 import { ModifyUserInfo } from './components/ModifyUserInfo';
+import { ChangePassWord } from './components/ChangePassWord';
 import './custom.css'
 
 export default class SubApp extends Component {
@@ -15,6 +16,7 @@ export default class SubApp extends Component {
               <Route path='/UserList' component={UserList} />
        
               <Route path='/ModifyUserInfo' component={ModifyUserInfo} />
+              <Route path='/ChangePassWord' component={ChangePassWord } />
           </Layout>
     );
   }

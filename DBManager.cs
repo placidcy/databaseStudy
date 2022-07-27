@@ -177,11 +177,25 @@ namespace my_new_app
             return userInfos;
         }
 
-        public List<UserInfo> ModifyUserName(string strUserName, string strCondition)
+        public List<UserInfo> ModifyUserInfo(string strName, string strEmail, string strPassWord , string strCondition)
         {
             List<UserInfo> userList = new List<UserInfo>();
 
-            string sql = "UPDATE UserInfo SET name = " + strUserName;
+            string sql = "UPDATE UserInfo SET ";
+
+            if (strName != null && strName.Length > 0) {
+                sql += "name = '" + strName + "'";
+            }
+
+            if (strEmail != null && strEmail.Length > 0)
+            {
+                sql += "email = '" + strEmail + "'";
+            }
+
+            if (strPassWord != null && strPassWord.Length > 0)
+            {
+                sql += "password = '" + strPassWord + "'";
+            }
 
             if (strCondition != null || strCondition.Length > 0)
             {
@@ -195,10 +209,13 @@ namespace my_new_app
 
             while (dataReader.Read())
             {
-                string strName = dataReader["name"] as string;
+                string strUserName = dataReader["name"] as string;
+                string strUserEmail = dataReader["email"] as string;
+                string strUserPassword = dataReader["password"] as string;
 
                 UserInfo userInfo = new UserInfo();
-                userInfo.Name = strName;
+                userInfo.Name = strUserName;
+                userInfo.Email = strUserEmail;
 
                 userList.Add(userInfo);
             }

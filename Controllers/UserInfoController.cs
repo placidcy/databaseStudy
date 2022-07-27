@@ -135,8 +135,9 @@ namespace my_new_app.Controllers
                 {
                     resUsers[i].Message = "유저 찾기 성공";
                     resUsers[i].Success = true;
-                    resUsers[i].UserInfo.ID = memberList[i].ID;
+
                     resUsers[i].UserInfo.Name = memberList[i].Name;
+                    resUsers[i].UserInfo.PassWord = memberList[i].PassWord;
                     resUsers[i].UserInfo.Email = memberList[i].Email;
                 }
 

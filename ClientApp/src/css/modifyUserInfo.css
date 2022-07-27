@@ -7,7 +7,10 @@
     left: 50%;
     top : 50%;
     transform: translate(-50%, -50%);
+    border: 1px solid #000000;
+    padding: 30px 15px;
 }
+
 
 .ID_box .ID {
     float: right;
@@ -16,12 +19,44 @@
 .inputBox {
     overflow: hidden;
     margin-bottom: 20px;
+    margin-top: 30px;
 }
 .inputBox input {
     float : right;
+    margin-top: 30px;
+}
+
+.modifyBox {
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.modifyBox input {
+    float: right;
 }
 
 .modifyInfoBox .title {
     text-align: center;
     margin-bottom: 30px;
 }
+
+.modifyInfoBox button {
+    margin-top: 30px;
+}
+
+.changeInfoBox .content {
+    float: right;
+}
+
+.changeInfoBox {
+    margin-top: 30px;
+}
+
+.changeInfoBox .modifyBox {
+    margin-top: 30px;
+}
+
+
+
+
+

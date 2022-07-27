@@ -54,7 +54,7 @@ export class NavMenu extends Component {
                         <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
                             <ul className="navbar-nav flex-grow">
                                 <NavItem>
-                                    <NavLink tag={Link} className="text-dark userName" to="/modifyUserInfo">{this.userName}</NavLink>
+                                    <NavLink tag={Link} className="text-dark userName" to="/ChangePassWord">{this.userName}</NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink tag={Link} className="text-dark LoginState" to="/UserList"></NavLink>

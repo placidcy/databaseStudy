@@ -54,11 +54,8 @@ export class Login extends Component{
             if (result.success == true) {
                 sessionStorage.setItem("name", result.userInfo.name);
                 sessionStorage.setItem("login", result.success);
-                sessionStorage.setItem("primaryKey", result.userInfo.id);
-  
+           
                 window.location.href = "./UserList";
-
-                this.RunPressEnter();
 
 
             } else {
@@ -83,7 +80,7 @@ export class Login extends Component{
 
                     <div className="bottomBtnBox">
                         <Link to="/join"><button className="joinBtn" >회원가입</button></Link>
-                        <button className="loginBtn" type="submit" formMethod="post" onClick={this.clickLogin} onKeyPress={this.clickLogin}>로그인</button>
+                        <button className="loginBtn" type="submit" formMethod="post" onClick={this.clickLogin} onKeyPress={this.RunPressEnter}>로그인</button>
                     </div>
                 </div>
             </div>
