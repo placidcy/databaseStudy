@@ -55,7 +55,7 @@ export class Login extends Component{
                 sessionStorage.setItem("name", result.userInfo.name);
                 sessionStorage.setItem("login", result.success);
            
-                window.location.href = "./UserList";
+                window.location.href = "./UserListControl";
 
 
             } else {

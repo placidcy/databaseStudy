@@ -6,28 +6,41 @@ export class ModifyUserInfo extends Component {
         super(props);
 
         this.state = {
-            userInfo: []
+            userInfo : null
         }
+
+        // this.props : ModifyUserInfo의 props값 / props : 외부에서 전달된 값
+        this.props = props;
+
+        console.log(this.props.userInfo);
     }
 
-    componentDidMount() {
-        this.LoadUserListData();
+    ClickModifyInfo = () => {
+        const nameBox = document.querySelector(".changeInfoBox input");
+        console.log(nameBox.value);
+        const emailBox = document.querySelector(".changeInfoBox input");
+        console.log(emailBox.value);
+
+        this.LoadUserListData(nameBox.value, emailBox.value, 1);
     }
 
-    async LoadUserListData() {
+    async LoadUserListData(userName, userEmail, ID) {
         let result;
 
-        let response = await fetch('/UserInfo/requestUserDatas', {
-            method: "POST",
+        let response = await fetch('/UserInfo/ModifyUserInformation', {
+            method: "post",
             headers: {
-                "contents-type": "application/json",
+                "contents-type": "application/json"
             },
-            body: null
+            body: JSON.stringify({
+                name: userName,
+                email: userEmail,
+                id: ID
+            })
         })
 
         if (response.ok) {
             result = await response.json();
-            this.setState({ userInfo: result });
 
         } else {
             console.log("데이터를 불러오지 못함");
@@ -37,36 +50,23 @@ export class ModifyUserInfo extends Component {
     render() {
         return (
             <div className="modifyInfoBox">
-                <h2 className="title">회원 정보 변경</h2>
-                <div className="ID_box inputBox">
-                    <span>ID(Primary Key): </span>
-                    <span className="ID">{}</span>
-                </div>
-
+                <h1 className="title">회원 정보 변경</h1>
+               
                 <div className="name_box changeInfoBox">
                     <div className="contentBox">
-                        <span>이름: </span>
-                        <span className="content">테스트 이름</span>
-                    </div>
-                    <div className="modifyBox">
-                        <label for="changeName">변경할 이름</label>
-                        <input type="text" name="changeName"></input>
+                        <h2>이름</h2>
+                        <input type="text" ></input>
                     </div>
                 </div>
 
                 <div className="email_box changeInfoBox">
                     <div className="contentBox">
-                        <span>EMAIL: </span>
-                        <span className="content">테스트 이메일</span>
+                        <h2>EMAIL</h2>
+                        <input type="text" ></input>
                     </div>
-
-                    <div className="modifyBox">
-                        <label for="changeEmail">변경할 이메일</label>
-                        <input type="text" name="changeEmail"></input>
-                     </div>
                 </div>
 
-                <button type="submit">수정</button>
+                <button onClick={this.ClickModifyInfo}>수정</button>
             </div>
         )
     }

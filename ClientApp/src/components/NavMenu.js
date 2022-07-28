@@ -3,7 +3,6 @@ import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLi
 import { Link } from 'react-router-dom';
 import '../css/NavMenu.css';
 
-// state값으로 유저 정보 불러오고 화면에 렌더링
 
 export class NavMenu extends Component {
     static displayName = NavMenu.name;

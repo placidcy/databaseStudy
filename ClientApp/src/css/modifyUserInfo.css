@@ -12,8 +12,12 @@
 }
 
 
-.ID_box .ID {
-    float: right;
+.modifyInfoBox h2 {
+    font-size: 16px;
+}
+
+.modifyInfoBox .changeInfoBox h2 {
+    font-size: 16px;
 }
 
 .inputBox {
@@ -21,19 +25,11 @@
     margin-bottom: 20px;
     margin-top: 30px;
 }
-.inputBox input {
-    float : right;
-    margin-top: 30px;
-}
-
 .modifyBox {
     overflow: hidden;
     margin-top: 15px;
 }
 
-.modifyBox input {
-    float: right;
-}
 
 .modifyInfoBox .title {
     text-align: center;
@@ -54,6 +50,10 @@
 
 .changeInfoBox .modifyBox {
     margin-top: 30px;
+}
+
+.changeInfoBox input{
+    width: 100%;
 }
 
 

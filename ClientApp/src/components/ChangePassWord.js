@@ -9,7 +9,7 @@ export class ChangePassWord extends Component {
     render() {
         return (
             <div className="password_Box inputBox">
-                <label for="password">PW 변경 : </label>
+                <label for="password">비밀번호 변경 : </label>
                 <input type="password" name="password" id="password" />
             </div>
         )

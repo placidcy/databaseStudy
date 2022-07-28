@@ -11,7 +11,6 @@ export class Join extends Component {
                 <div className="ID_Box inputBox">
                     <label for="ID">ID : </label>   
                     <input type="text" id="ID" />
-                    {/*<button className="checkDuplicate">중복 확인</button>*/}
                 </div>
 
                 <div className="password_Box inputBox">

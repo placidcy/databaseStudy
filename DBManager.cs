@@ -31,15 +31,6 @@ namespace my_new_app
 
             m_sqlConnect.Open();
 
-            //sqlConnect = new SqlConnection();
-            //sqlConnect.ConnectionString = constring;
-
-            //sqlConnect.Open();
-
-            //string strSQL = "select * from UserInfo";
-            //SqlCommand cmd = new SqlCommand(strSQL, sqlConnect);
-            //string[] data = SelectQuery(cmd);
-
             if (m_sqlConnect != null)
             {
                 m_sqlConnect.Close();
@@ -177,29 +168,29 @@ namespace my_new_app
             return userInfos;
         }
 
-        public List<UserInfo> ModifyUserInfo(string strName, string strEmail, string strPassWord , string strCondition)
+        public List<UserInfo> ModifyUserDB(string strName, string strEmail, string strCondition)
         {
             List<UserInfo> userList = new List<UserInfo>();
+
+            if(strCondition == null || strCondition.Length <= 0)
+            {
+                return null;
+            }
 
             string sql = "UPDATE UserInfo SET ";
 
             if (strName != null && strName.Length > 0) {
-                sql += "name = '" + strName + "'";
+                sql += " name = '" + strName + "'";
             }
 
             if (strEmail != null && strEmail.Length > 0)
             {
-                sql += "email = '" + strEmail + "'";
-            }
-
-            if (strPassWord != null && strPassWord.Length > 0)
-            {
-                sql += "password = '" + strPassWord + "'";
+                sql += " email = '" + strEmail + "'";
             }
 
             if (strCondition != null || strCondition.Length > 0)
             {
-                sql += " WHERE " + strCondition;
+                sql += " WHERE ID = '" + strCondition + "'";
             }
 
             m_sqlConnect.Open();
@@ -211,7 +202,7 @@ namespace my_new_app
             {
                 string strUserName = dataReader["name"] as string;
                 string strUserEmail = dataReader["email"] as string;
-                string strUserPassword = dataReader["password"] as string;
+                //string strUserPassword = dataReader["password"] as string;
 
                 UserInfo userInfo = new UserInfo();
                 userInfo.Name = strUserName;

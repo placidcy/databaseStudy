@@ -20,8 +20,8 @@ export default class App extends Component {
                 <Route exact path='/' component={Login} />
                 <Route path='/join' component={Join} />
 
-                <Route path='/UserList' component={SubApp} />
-                <Route path='/ModifyUserInfo' component={SubApp} />
+                  <Route path='/UserListControl' component={SubApp} />
+                  {/* <Route path='/ModifyUserInfo' component={SubApp} /> */}
                 <Route path='/ChangePassWord' component={SubApp} />
              </Switch>
         </Router>

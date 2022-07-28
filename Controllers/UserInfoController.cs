@@ -105,12 +105,12 @@ namespace my_new_app.Controllers
             return Ok(resUsers);
         }
 
-        public ActionResult ModifyUserInfo([FromBody] UserInfo userInfo)
+        public ActionResult ModifyUserInformation([FromBody] ModifiedUserInfo modifiedInfo)
         {
+            List<UserInfo> checkMemberListID = new List<UserInfo>();
             List<UserInfo> memberList = new List<UserInfo>();
-            UserInfo userinfo = new UserInfo();
 
-            memberList = m_dbManager.SelectUserInfos("ID = " + userinfo.ID);
+            memberList = m_dbManager.ModifyUserDB(modifiedInfo.UserName, modifiedInfo.UserEmail, modifiedInfo.ID);
 
             ResponseUser[] resUsers = new ResponseUser[memberList.Count];
 
@@ -137,7 +137,7 @@ namespace my_new_app.Controllers
                     resUsers[i].Success = true;
 
                     resUsers[i].UserInfo.Name = memberList[i].Name;
-                    resUsers[i].UserInfo.PassWord = memberList[i].PassWord;
+                    //resUsers[i].UserInfo.PassWord = memberList[i].PassWord;
                     resUsers[i].UserInfo.Email = memberList[i].Email;
                 }
 

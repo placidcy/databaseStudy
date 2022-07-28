@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 import "../css/UserList.css";
 import { Link } from "react-router-dom";
 import { ModifyUserInfo } from './ModifyUserInfo';
+import { UserListControl } from './UserListControl';
 
 // 회원정보 수정
 // 수정 버튼 누르면 회원 정보 페이지로 넘어가기
@@ -9,7 +10,7 @@ import { ModifyUserInfo } from './ModifyUserInfo';
 // 수정하면 다시 회원 목록으로 돌아가고 수정된 데이터가 표현되게 구현
 
 // selectuserId 함수 만들기
-// UserList , modifyuserInfo 감싸는 컴포넌트 하나 생성
+// UserList 감싸는 컴포넌트 하나 생성
 // 유저 id와 출력된 정보의 id 비교
 
 
@@ -19,35 +20,14 @@ export class UserList extends Component {
 
         this.state = {
             userList: [],
-            pageMode: ""
+
         }
     }
 
-    SelectID() {
-        let UI = this.displayUI();
-
-        let findResult = UI.find(ele => {
-            const ID_tag = document.querySelector(".table tr td:nth-child(2)");
-            if (ele.value == ID_tag.value) {
-                return ele.value;
-            } else {
-                return null;
-            }
-        })
-
-        for (let count = 0; count < this.state.userList.length; count++) {
-            if (this.state.userList[count].userInfo.id == findResult) {
-                return this.state.userList[count].userInfo.id;
-            }
-
-            else {
-                return null;
-            }
-        }
-    }
-
-    componentDidMount() {
-        this.setState({pageMode : "UserList"});
+    LoadUserInfo = (userInfo) => {
+        sessionStorage.setItem("ID", userInfo.id);
+        sessionStorage.setItem("userName", userInfo.name);
+        sessionStorage.setItem("userEmail", userInfo.email);
     }
 
     displayUI = () => {
@@ -58,12 +38,6 @@ export class UserList extends Component {
         if (this.state.userList === null || this.state.userList === undefined)
             return null;
 
-        //if (this.state.mode === "UserList") {`
-        //    return <UserList />;
-        //} else if (this.state.mode === "ModifyUserInfo") {
-        //    return <ModifyUserInfo />;
-        //}
-
         for (let i = 0; i < this.state.userList.length; i++) {
             arrDisplayUI.push(
                 <tr>
@@ -72,11 +46,12 @@ export class UserList extends Component {
                     <td>{this.state.userList[i].userInfo.name}</td>
                     <td>{this.state.userList[i].userInfo.email}</td>
                     <td>
-                        <button>수정</button>
+                        <button onClick={() => this.props.LoadUserInfo(this.state.userList[i].userInfo)}>수정</button>
                     </td>
                 </tr>
             )
         }
+
         return arrDisplayUI;
     }
 
@@ -104,7 +79,6 @@ export class UserList extends Component {
     render() {
         let displayUIData = this.displayUI();
 
-
         return (
             <div>
                 <h1 id="tabelLabel" >사용자 리스트</h1>
@@ -119,7 +93,7 @@ export class UserList extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                         {displayUIData}  
+                        {displayUIData}  
                     </tbody>
                 </table>
             </div>
