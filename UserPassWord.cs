@@ -2,12 +2,19 @@
 {
     public class UserPassWord
     {
-        private string m_strPassword = "";
+        string m_strPassword = "";
+        int m_nID = -1;
 
         public string Password
         {
             get { return m_strPassword; }
             set { m_strPassword = value; }
+        }
+
+        public int ID
+        {
+            get { return m_nID; }
+            set { m_nID = value; }
         }
     }
 }

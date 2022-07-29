@@ -105,12 +105,12 @@ namespace my_new_app.Controllers
             return Ok(resUsers);
         }
 
+        [HttpPost]
         public ActionResult ModifyUserInformation([FromBody] ModifiedUserInfo modifiedInfo)
         {
-            List<UserInfo> checkMemberListID = new List<UserInfo>();
             List<UserInfo> memberList = new List<UserInfo>();
 
-            memberList = m_dbManager.ModifyUserDB(modifiedInfo.UserName, modifiedInfo.UserEmail, modifiedInfo.ID);
+            memberList = m_dbManager.ModifyUserDB(modifiedInfo.UserName, modifiedInfo.UserEmail, modifiedInfo.ID.ToString());
 
             ResponseUser[] resUsers = new ResponseUser[memberList.Count];
 
@@ -137,10 +137,48 @@ namespace my_new_app.Controllers
                     resUsers[i].Success = true;
 
                     resUsers[i].UserInfo.Name = memberList[i].Name;
-                    //resUsers[i].UserInfo.PassWord = memberList[i].PassWord;
+                    //resUsers[i].UserInfo.PassWord = memberList[i].UserPassWord;
                     resUsers[i].UserInfo.Email = memberList[i].Email;
                 }
 
+            }
+
+            return Ok(resUsers);
+        }
+
+        [HttpPost]
+        public ActionResult ModifyPassWord([FromBody] UserPassWord password)
+        {
+            List<UserInfo> memberList = new List<UserInfo>();
+
+            memberList = m_dbManager.ModifyPassWord_DB(password.Password, password.ID.ToString());
+
+            ResponseUser[] resUsers = new ResponseUser[memberList.Count];
+
+            for (int i = 0; i < memberList.Count; i++)
+            {
+                resUsers[i] = new ResponseUser();
+                resUsers[i].UserInfo = new UserInfo();
+
+                if (memberList == null)
+                {
+                    resUsers[i].Message = "유저 목록 컨테이너가 할당되지 않음";
+                    resUsers[i].Success = false;
+                }
+
+                if (memberList.Count == 0)
+                {
+                    resUsers[i].Message = "저장된 유저 정보가 없음";
+                    resUsers[i].Success = false;
+                }
+
+                else
+                {
+                    resUsers[i].Message = "유저 찾기 성공";
+                    resUsers[i].Success = true;
+
+                    resUsers[i].UserInfo.PassWord = memberList[i].PassWord;
+                }
             }
 
             return Ok(resUsers);

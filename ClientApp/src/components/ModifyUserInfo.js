@@ -16,12 +16,12 @@ export class ModifyUserInfo extends Component {
     }
 
     ClickModifyInfo = () => {
-        const nameBox = document.querySelector(".changeInfoBox input");
+        const nameBox = document.querySelector(".modifyInfoBox .name_box input");
         console.log(nameBox.value);
-        const emailBox = document.querySelector(".changeInfoBox input");
+        const emailBox = document.querySelector(".modifyInfoBox .email_box input");
         console.log(emailBox.value);
 
-        this.LoadUserListData(nameBox.value, emailBox.value, 1);
+        this.LoadUserListData(nameBox.value, emailBox.value, this.props.userInfo.id);
     }
 
     async LoadUserListData(userName, userEmail, ID) {
@@ -30,12 +30,13 @@ export class ModifyUserInfo extends Component {
         let response = await fetch('/UserInfo/ModifyUserInformation', {
             method: "post",
             headers: {
-                "contents-type": "application/json"
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: userName,
-                email: userEmail,
-                id: ID
+                id: ID,
+                userName: userName,
+                userEmail: userEmail
             })
         })
 

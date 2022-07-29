@@ -5,7 +5,7 @@
         string m_strUserName;
         string m_strUserEmail;
         string m_strUserPassWord;
-        string m_strID;
+        int m_nID;
 
         public string UserName
         {
@@ -28,11 +28,11 @@
             set { m_strUserEmail = value; }
         }
 
-        public string ID
+        public int ID
         {
-            get { return m_strID; }
+            get { return m_nID; }
 
-            set { m_strID = value; }
+            set { m_nID = value; }
         }
 
     }

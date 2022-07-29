@@ -124,7 +124,7 @@ namespace my_new_app
             }
 
             m_sqlConnect.Open();
-
+             
             SqlCommand sqlCommand = new SqlCommand(strSQL, m_sqlConnect);
             SqlDataReader dataReader = sqlCommand.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
 
@@ -185,7 +185,7 @@ namespace my_new_app
 
             if (strEmail != null && strEmail.Length > 0)
             {
-                sql += " email = '" + strEmail + "'";
+                sql += ", email = '" + strEmail + "'";
             }
 
             if (strCondition != null || strCondition.Length > 0)
@@ -213,6 +213,46 @@ namespace my_new_app
 
             dataReader.Close();
 
+
+            return userList;
+        }
+
+        public List<UserInfo> ModifyPassWord_DB(string strPassWord, string strCondition)
+        {
+            List<UserInfo> userList = new List<UserInfo>();
+
+            if(strCondition == null || strCondition.Length <= 0)
+            {
+                return null;
+            }
+
+            string sql = "UPDATE UserInfo SET";
+
+            if(strPassWord != null && strPassWord.Length > 0)
+            {
+                sql += " password = '" + strPassWord + "'";
+            }
+
+            if(strCondition != null && strCondition.Length > 0)
+            {
+                sql += " WHERE ID = '" + strCondition + "'";
+            }
+
+            m_sqlConnect.Open();
+
+            SqlCommand sqlCommend = new SqlCommand(sql, m_sqlConnect);
+            SqlDataReader sqlReader = sqlCommend.ExecuteReader();
+
+            while(sqlReader.Read())
+            {
+                UserInfo info = new UserInfo();
+
+                string password = sqlReader["password"] as string;
+                info.PassWord = password;
+                userList.Add(info);
+            }
+
+            sqlReader.Close();
 
             return userList;
         }
