@@ -29,9 +29,10 @@ export class ChangePassWord extends Component {
 
         if (response.ok) {
             console.log("데이터 불러오기 성공");
-            let result = response.json();
+            let result = await response.json();
             this.setState({ userList: result });
 
+            
         } else {
             console.log("데이터를 불러오지 못함");
         }
@@ -39,17 +40,30 @@ export class ChangePassWord extends Component {
 
     ClickModifyPassword() {
         const passwordBtn = document.querySelector(".password_Box #password");
+        const currentPassword = document.querySelector(".password_Box #currentPassword");
+
+        if (currentPassword.value != sessionStorage.getItem("password")) {
+            alert("현재 비밀번호가 틀림");
+            return;
+        }
 
         console.log(passwordBtn.value);
 
-        this.LoadUserPassword(passwordBtn.value);
+        this.LoadUserPassword(passwordBtn.value, sessionStorage.getItem("ID"));
     }
+
 
     render() {
         return (
-            <div className="password_Box inputBox">
-                <label for="password">비밀번호 변경 : </label>
-                <input type="password" name="password" id="password" />
+            <div className="passwordBox"> 
+                <div className="currentPassBox">
+                    <label for="currentPassword">현재 비밀번호:</label>
+                    <input type="password" name="currentPassword" id="currentPassword"></input>
+                </div>
+                <div className="changePassBox">
+                    <label for="password">변경할 비밀번호: </label>
+                    <input type="password" name="password" id="password" />
+                </div>
                 <button className="modify" onClick={this.ClickModifyPassword}>수정</button>
             </div>
         )

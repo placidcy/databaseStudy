@@ -50,10 +50,12 @@ export class Login extends Component{
 
         if (res.ok) {
             let result = await res.json();
-
+            
             if (result.success == true) {
+                sessionStorage.setItem("ID", result.userInfo.id);
                 sessionStorage.setItem("name", result.userInfo.name);
                 sessionStorage.setItem("login", result.success);
+                sessionStorage.setItem("password", result.userInfo.passWord);
            
                 window.location.href = "./UserListControl";
 

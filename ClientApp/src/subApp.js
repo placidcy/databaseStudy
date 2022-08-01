@@ -18,7 +18,7 @@ export default class SubApp extends Component {
                * <Route path='/ModifyUserInfo' component={ModifyUserInfo} />
               */}
               <Route path='/UserListControl' component={UserListControl} />
-              <Route path='/ChangePassWord' component={ChangePassWord } />
+              <Route path='/ChangePassWord' component={ChangePassWord} />
           </Layout>
     );
   }

@@ -257,6 +257,65 @@ namespace my_new_app
             return userList;
         }
 
+        public List<UserInfo> AddUserInfo(string strUserID, string strUserName, string strUserEmail, string strPhoneNumber, string strPassword, string strCheckUserID)
+        {
+            List<UserInfo> userList = new List<UserInfo>();
+
+            string sql = "INSERT INTO UserInfo(userID, name, email, phoneNumber, password) VALUES(" ;
+
+            if(strUserID != null || strUserID.Length > 0)
+            {
+                sql += "'" + strUserID + "'";
+            }
+
+            if(strUserName != null || strUserName.Length > 0)
+            {
+                sql += "'" + strUserName + "'";
+            }
+
+            if (strUserEmail != null || strUserEmail.Length > 0)
+            {
+                sql += "'" + strUserEmail + "'";
+            }
+
+            if (strPhoneNumber != null || strPhoneNumber.Length > 0)
+            {
+                sql += "'" + strPhoneNumber +  "'";
+            }
+
+            if (strPassword != null || strPassword.Length > 0)
+            {
+                sql += "'" + strPassword + "'" + ")";
+            }
+
+            if(strCheckUserID != null || strCheckUserID.Length > 0)
+            {
+                sql += " WHERE userID = '";
+            }
+
+            m_sqlConnect.Open();
+
+            SqlCommand sqlCommend = new SqlCommand(sql, m_sqlConnect);
+            SqlDataReader sqlReader = sqlCommend.ExecuteReader();
+
+            UserInfo userInfo = new UserInfo();
+
+            while(sqlReader.Read())
+            {
+                userInfo.UserID = sqlReader["userID"] as string;
+                userInfo.Name = sqlReader["name"] as string;
+                userInfo.Email = sqlReader["email"] as string;
+                userInfo.PhoneNumber = sqlReader["phoneNumber"] as string;
+                userInfo.PassWord = sqlReader["password"] as string;
+
+                userList.Add(userInfo);
+            }
+
+            sqlReader.Close();
+
+            return userList;
+        }
+
         private static string[] SelectQuery(SqlCommand cmd)
         {
             SqlDataReader reader = cmd.ExecuteReader();

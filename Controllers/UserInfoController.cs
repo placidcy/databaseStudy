@@ -8,12 +8,10 @@ namespace my_new_app.Controllers
     public class UserInfoController : Controller
     {
         DBManager m_dbManager;
-        UserPassWord userPassword;
 
         public UserInfoController()
         {
             m_dbManager = new DBManager();
-            userPassword = new UserPassWord();
         }
 
         [HttpPost]
@@ -23,7 +21,7 @@ namespace my_new_app.Controllers
             ResponseUser user = new ResponseUser();
 
             // 해당하는 아이디가 있는지 검사
-            memberList = m_dbManager.SelectUserInfos("userID= '" + userInfo.ID + "'");
+            memberList = m_dbManager.SelectUserInfos("ID= '" + userInfo.ID + "'");
 
             // memberList값이 없을때(SQL 쿼리문이 잘못됐을때)
             if(memberList == null)
@@ -54,6 +52,7 @@ namespace my_new_app.Controllers
                     user.UserInfo.Email = memberList[0].Email;
                     user.UserInfo.PhoneNumber = memberList[0].PhoneNumber;
                     user.UserInfo.UserLevel = memberList[0].UserLevel;
+                    user.UserInfo.PassWord = memberList[0].PassWord;
                 }
 
                 else
@@ -182,6 +181,43 @@ namespace my_new_app.Controllers
             }
 
             return Ok(resUsers);
+        }
+
+        [HttpPost]
+        public ActionResult JoinUser([FromBody] UserInfo userInfo)
+        {
+            List<UserInfo> memberList = new List<UserInfo>();
+            List<UserInfo> checkMemberList = new List<UserInfo>();
+
+            memberList = m_dbManager.AddUserInfo(userInfo.UserID, userInfo.Name, userInfo.Email, userInfo.PhoneNumber, userInfo.PassWord, userInfo.UserID);
+
+            ResponseUser resUser = new ResponseUser();
+            resUser.UserInfo = new UserInfo();
+
+            if(memberList == null)
+            {
+                resUser.Message = "유저 목록 컨테이너가 할당되지 않음";
+                resUser.Success = false;
+            }
+
+            if(memberList.Count == 0)
+            {
+                resUser.Message = "저장된 유저 정보가 없음";
+                resUser.Success = false;
+            }
+
+            else
+            {
+                resUser.Message = "유저 찾기 성공";
+                resUser.Success = true;
+
+                resUser.UserInfo.UserID = userInfo.UserID;
+                resUser.UserInfo.Name = userInfo.Name;
+                resUser.UserInfo.Email = userInfo.Email;
+                resUser.UserInfo.PhoneNumber = userInfo.PhoneNumber;
+            }
+
+            return Ok(resUser);
         }
     }
 }

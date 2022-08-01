@@ -25,9 +25,6 @@ export class UserList extends Component {
     }
 
     LoadUserInfo = (userInfo) => {
-        sessionStorage.setItem("ID", userInfo.id);
-        sessionStorage.setItem("userName", userInfo.name);
-        sessionStorage.setItem("userEmail", userInfo.email);
     }
 
     displayUI = () => {
