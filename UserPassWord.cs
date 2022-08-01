@@ -2,8 +2,8 @@
 {
     public class UserPassWord
     {
-        string m_strPassword = "";
-        int m_nID = -1;
+        string m_strPassword;
+        int m_nID;
 
         public string Password
         {

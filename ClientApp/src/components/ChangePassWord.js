@@ -1,14 +1,20 @@
 ﻿import React, { Component } from 'react';
 import '../css/ChangePassWord.css';
+import { UserList } from './UserList';
+import { UserListControl } from './UserListControl';
 
 export class ChangePassWord extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            userList : []
+        }
+
         this.ClickModifyPassword = this.ClickModifyPassword.bind(this);
     }
 
-    async LoadUserPassword(inputPassWord) {
+    LoadUserPassword = async (inputPassWord, inputID) => {
         let response = await fetch('/UserInfo/ModifyPassWord', {
             method: "post",
             headers: {
@@ -16,12 +22,15 @@ export class ChangePassWord extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                Password: inputPassWord
+                Password: inputPassWord,
+                ID: inputID
             })
         })
 
         if (response.ok) {
             console.log("데이터 불러오기 성공");
+            let result = response.json();
+            this.setState({ userList: result });
 
         } else {
             console.log("데이터를 불러오지 못함");
