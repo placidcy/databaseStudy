@@ -21,7 +21,7 @@ namespace my_new_app.Controllers
             ResponseUser user = new ResponseUser();
 
             // 해당하는 아이디가 있는지 검사
-            memberList = m_dbManager.SelectUserInfos("ID= '" + userInfo.ID + "'");
+            memberList = m_dbManager.SelectUserInfos("userID= '" + userInfo.ID + "'");
 
             // memberList값이 없을때(SQL 쿼리문이 잘못됐을때)
             if(memberList == null)
@@ -187,9 +187,8 @@ namespace my_new_app.Controllers
         public ActionResult JoinUser([FromBody] UserInfo userInfo)
         {
             List<UserInfo> memberList = new List<UserInfo>();
-            List<UserInfo> checkMemberList = new List<UserInfo>();
 
-            memberList = m_dbManager.AddUserInfo(userInfo.UserID, userInfo.Name, userInfo.Email, userInfo.PhoneNumber, userInfo.PassWord, userInfo.UserID);
+            memberList = m_dbManager.AddUserInfo(userInfo.UserID, userInfo.Name, userInfo.Email, userInfo.PhoneNumber, userInfo.PassWord);
 
             ResponseUser resUser = new ResponseUser();
             resUser.UserInfo = new UserInfo();

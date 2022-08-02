@@ -5,17 +5,24 @@ import { Link } from "react-router-dom";
 
 export class Join extends Component {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             userData: null
         }
+
+        this.LoadUserData = this.LoadUserData.bind(this);
+    }
+
+    componentDidMount() {
+        console.log(this.state.userData);
     }
 
     LoadUserData = async (inputUserID, inputName, inputEmail, inputPhone, inputPassword) => {
         let response = await fetch("/UserInfo/JoinUser", {
             method: "post",
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -29,7 +36,10 @@ export class Join extends Component {
 
         if (response.ok == true) {
             let data = await response.json();
+            console.log(data);
+
             this.setState({ userData: data });
+            console.log(this.state.userData);
 
         } else {
             console.log("JoinUser 실행 실패");
@@ -43,16 +53,11 @@ export class Join extends Component {
         const name = document.querySelector(".joinBox #name");
         const email = document.querySelector(".joinBox #email");
         const phoneNumber = document.querySelector(".joinBox #phoneNumber");
-
-        if (checkPassword.value != password.value) {
-            console.log("확인용 비밀번호와 입력한 비밀번호가 일치하지 않음");
-        } else if (userID.value == this.state.userData.userInfo.userID) {
-            console.log("동일한 아이디가 존재함");
-        }
+       
+        this.LoadUserData(userID.value, name.value, email.value, phoneNumber.value, password.value);
+        
 
         console.log(this.state.userData.userInfo.userID);
-
-        this.LoadUserData(userID.value, name.value, email.value, phoneNumber.value, password.value);
     }
 
     render() {

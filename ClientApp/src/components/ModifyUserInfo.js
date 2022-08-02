@@ -18,10 +18,26 @@ export class ModifyUserInfo extends Component {
     ClickModifyInfo = () => {
         const nameBox = document.querySelector(".modifyInfoBox .name_box input");
         console.log(nameBox.value);
+
         const emailBox = document.querySelector(".modifyInfoBox .email_box input");
         console.log(emailBox.value);
+       
+        if (nameBox.value.length <= 0 && emailBox.value.length <= 0) {
+            alert("변경할 이름과 이메일이 입력되지 않음");
+            return;
+        } else if (emailBox.value.length <= 0) {
+            alert("변경할 이메일이 입력되지 않음");
+            return;
+        } else if (nameBox.value.length <= 0) {
+            alert("변경할 이름이 입력되지 않음");
+            return;
+        }
 
         this.LoadUserListData(nameBox.value, emailBox.value, this.props.userInfo.id);
+    }
+
+    Goback = () => {
+        this.props.history.goBack();
     }
 
     async LoadUserListData(userName, userEmail, ID) {
@@ -68,6 +84,7 @@ export class ModifyUserInfo extends Component {
                 </div>
 
                 <button onClick={this.ClickModifyInfo}>수정</button>
+                <button onClick={this.Goback}>취소</button>
             </div>
         )
     }

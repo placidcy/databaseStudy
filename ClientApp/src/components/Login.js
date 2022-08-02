@@ -35,7 +35,7 @@ export class Login extends Component{
     }
 
     async doLogin(id, password) {
-        // UnserInfoContaller/requestUserData 함수
+        // UnserInfoContaller/requestLogin 함수
         const res = await fetch('/UserInfo/requestLogin', {
             method: 'post',
             headers: {

@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import { useHistory } from 'react-router-dom';
 import '../css/ChangePassWord.css';
 import { UserList } from './UserList';
 import { UserListControl } from './UserListControl';
@@ -12,6 +13,10 @@ export class ChangePassWord extends Component {
         }
 
         this.ClickModifyPassword = this.ClickModifyPassword.bind(this);
+    }
+
+    Goback = () => {
+        this.props.history.goBack();
     }
 
     LoadUserPassword = async (inputPassWord, inputID) => {
@@ -39,17 +44,19 @@ export class ChangePassWord extends Component {
     }
 
     ClickModifyPassword() {
-        const passwordBtn = document.querySelector(".password_Box #password");
-        const currentPassword = document.querySelector(".password_Box #currentPassword");
+        const passwordBtn = document.querySelector(".passwordBox #password");
+        const currentPassword = document.querySelector(".passwordBox #currentPassword");
 
-        if (currentPassword.value != sessionStorage.getItem("password")) {
+        let accountPassword = sessionStorage.getItem("password");
+
+        console.log(currentPassword.value + accountPassword);
+
+        if (currentPassword.value != accountPassword) {
             alert("현재 비밀번호가 틀림");
             return;
+        } else {
+            this.LoadUserPassword(passwordBtn.value, sessionStorage.getItem("ID"));
         }
-
-        console.log(passwordBtn.value);
-
-        this.LoadUserPassword(passwordBtn.value, sessionStorage.getItem("ID"));
     }
 
 
@@ -65,6 +72,7 @@ export class ChangePassWord extends Component {
                     <input type="password" name="password" id="password" />
                 </div>
                 <button className="modify" onClick={this.ClickModifyPassword}>수정</button>
+                <button className="back" onClick={this.Goback}>취소</button>
             </div>
         )
     }

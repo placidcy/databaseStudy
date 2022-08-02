@@ -257,7 +257,7 @@ namespace my_new_app
             return userList;
         }
 
-        public List<UserInfo> AddUserInfo(string strUserID, string strUserName, string strUserEmail, string strPhoneNumber, string strPassword, string strCheckUserID)
+        public List<UserInfo> AddUserInfo(string strUserID, string strUserName, string strUserEmail, string strPhoneNumber, string strPassword)
         {
             List<UserInfo> userList = new List<UserInfo>();
 
@@ -273,24 +273,24 @@ namespace my_new_app
                 sql += "'" + strUserName + "'";
             }
 
-            if (strUserEmail != null || strUserEmail.Length > 0)
+            if(strUserEmail != null || strUserEmail.Length > 0)
             {
                 sql += "'" + strUserEmail + "'";
             }
 
-            if (strPhoneNumber != null || strPhoneNumber.Length > 0)
+            if(strPhoneNumber != null || strPhoneNumber.Length > 0)
             {
                 sql += "'" + strPhoneNumber +  "'";
             }
 
-            if (strPassword != null || strPassword.Length > 0)
+            if(strPassword != null || strPassword.Length > 0)
             {
                 sql += "'" + strPassword + "'" + ")";
             }
 
-            if(strCheckUserID != null || strCheckUserID.Length > 0)
+            if(strUserID != null || strUserID.Length > 0)
             {
-                sql += " WHERE userID = '";
+                sql += " WHERE userID != " + strUserID + "'";
             }
 
             m_sqlConnect.Open();
